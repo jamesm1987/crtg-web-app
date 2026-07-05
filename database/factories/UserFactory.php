@@ -47,6 +47,26 @@ class UserFactory extends Factory
     }
 
     /**
+     * State method to quickly generate an admin user.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+        ]);
+    }
+
+    /**
+     * State method to quickly generate an admin user.
+     */
+    public function user(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'user',
+        ]);
+    }    
+
+    /**
      * Indicate that the model has two-factor authentication configured.
      */
     public function withTwoFactor(): static

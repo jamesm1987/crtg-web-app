@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedTinyInteger('api_id');
-            $table->string('country');
+            $table->unsignedSmallInteger('api_id');
+            $table->string('country')->nullable();
             $table->string('type');
+            $table->boolean('track_scorers')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
