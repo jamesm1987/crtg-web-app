@@ -1,4 +1,4 @@
-<x-layouts::admin.sidebar :title="$title ?? null">
+<x-layouts::admineb.sidebar :title="$title ?? null">
     <flux:main>
         {{ $slot }}
     </flux:main>

@@ -39,7 +39,7 @@ class CompetitionResource extends Resource
                     ->required(),
                 TextInput::make('api_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric(),                    
                 TextInput::make('country'),
                 TextInput::make('type')
                     ->required(),
