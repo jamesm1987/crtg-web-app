@@ -61,8 +61,7 @@ class TeamResource extends Resource
                 TextColumn::make('api_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('competition_id')
-                    ->numeric()
+                TextColumn::make('league')
                     ->sortable(),
                 TextColumn::make('price')
                     ->money()
