@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model; 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
@@ -30,5 +30,15 @@ class Competition extends Model
         return [
             'track_scorers' => 'boolean',
         ];
+    }
+
+    public function teams(): HasMany
+    {
+        return $this->hasMany(Team::class, 'competition_id');
+    }
+
+    public function fixtures(): HasMany
+    {
+        return $this->hasMany(Fixture::class);
     }
 }

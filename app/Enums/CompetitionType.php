@@ -8,19 +8,19 @@ enum CompetitionType: string
 {
     use options;
     
-    case LEAGUE = 'league';
-    case DOMESTIC_CUP = 'domestic_cup';
-    case EUROPEAN_CUP = 'european_cup';
+    case League = 'league';
+    case Domestic_Cup = 'domestic_cup';
+    case European_Cup = 'european_cup';
 
     /**
      * Returns the human-readable name for the competition type.
      */
-    public function label(): string
+    public function getLabel(): string
     {
         return match($this) {
-            self::LEAGUE => 'League',
-            self::DOMESTIC_CUP => 'Domestic Cup',
-            self::EUROPEAN_CUP => 'European Cup',
+            self::League => 'League',
+            self::Domestic_Cup => 'Domestic Cup',
+            self::European_Cup => 'European Cup',
         };
     }
 }

@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Competitions\Pages;
 
 use App\Filament\Resources\Competitions\CompetitionResource;
 use Filament\Actions\CreateAction;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 
-class ManageCompetitions extends ManageRecords
+class ListCompetitions extends ListRecords
 {
     protected static string $resource = CompetitionResource::class;
 

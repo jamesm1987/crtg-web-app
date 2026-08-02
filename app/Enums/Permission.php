@@ -8,18 +8,18 @@ enum Permission: string
 {
     use options;
 
-    case ADMIN = 'admin';
-    case USER = 'user';
+    case Admin = 'admin';
+    case User = 'user';
 
 
     /**
      * Returns the human-readable name for the competition type.
      */
-    public function label(): string
+    public function getLabel(): string
     {
         return match($this) {
-            self::ADMIN => 'Admin',
-            self::USER => 'User',
+            self::Admin => 'Admin',
+            self::User => 'User',
         };
     }
 }

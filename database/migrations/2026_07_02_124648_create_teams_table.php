@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('display_name')->unique()->nullable();
-            $table->unsignedTinyInteger('api_id');
+            $table->unsignedSmallInteger('api_id');
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
             $table->unsignedTinyInteger('price')->nullable();
 

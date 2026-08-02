@@ -3,8 +3,9 @@
 namespace App\Services\Api\DTOs;
 
 use Illuminate\Support\Collection;
+use App\Services\Api\DTOs\Contracts\ApiDataTransferObject;
 
-class StandingData
+class StandingData implements ApiDataTransferObject
 {
     public function __construct(
         public int $rank,
@@ -18,9 +19,9 @@ class StandingData
         public int $lost,
     ) {}
 
-    public static function fromApiResponse(array $raw): self
+    public static function fromApiResponse(array $raw): static
     {
-        return new self(
+        return new static(
             rank: $raw['rank'],
             teamApiId: $raw['team']['id'],
             teamName: $raw['team']['name'],
@@ -34,13 +35,13 @@ class StandingData
     }
 
     /**
-    * @return Collection<int, self>
+    * @return Collection<int, static>
     */
     public static function collectionFromResponse(array $response): Collection
     {
         $rows = $response[0]['league']['standings'][0] ?? [];
 
-        return collect($rows)->map(fn (array $row) => self::fromApiResponse($row));
+        return collect($rows)->map(fn (array $row) => static::fromApiResponse($row));
         
     }
 }

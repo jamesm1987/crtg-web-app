@@ -3,6 +3,9 @@
 namespace App\Services\Api;
 
 use Illuminate\Support\Facades\Http;
+use App\Services\Api\DTOs\TeamData;
+use App\Services\Api\DTOs\FixtureData;
+use Illuminate\Support\Collection;
 
 class FootballApiClient
 {
@@ -33,22 +36,27 @@ class FootballApiClient
             ->json('response', []);
     }
 
-    public function fetchLeagueTable(int $leagueId, int $season): array
+    public function fetchLeagueTable(int $leagueId, int $season): Collection
     {
         return $this->fetch('standings', $leagueId, $season);
     }    
 
-    public function fetchTeams(int $leagueId, int $season): array
+    public function fetchTeams(int $leagueId, int $season): Collection
     {
-        return $this->fetch('teams', $leagueId, $season);
+        
+        return TeamData::collectionFromResponse(
+            $this->fetch('teams', $leagueId, $season)
+        );
     }
 
-    public function fetchFixtures(int $leagueId, int $season): array
+    public function fetchFixtures(int $leagueId, int $season): Collection
     {
-        return $this->fetch('fixtures', $leagueId, $season);
+        return FixtureData::collectionFromResponse(
+            $this->fetch('fixtures', $leagueId, $season)
+        );
     }
 
-    public function fetchTopScorers(int $leagueId, int $season): array
+    public function fetchTopScorers(int $leagueId, int $season): Collection
     {
         return $this->fetch('players/topscorers', $leagueId, $season);            
     }

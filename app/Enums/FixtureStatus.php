@@ -8,18 +8,18 @@ enum FixtureStatus: string
 {
     use options;
 
-    case NOT_STARTED = 'NS';
-    case FULL_TIME   = 'FT';
+    case Not_Started = 'NS';
+    case Full_Time   = 'FT';
 
 
     /**
      * Returns the human-readable name for the competition type.
      */
-    public function label(): string
+    public function getLabel(): string
     {
         return match($this) {
-            self::NOT_STARTED => 'Not Started',
-            self::FULL_TIME => 'Full Time',
+            self::Not_Started => 'Not Started',
+            self::Full_Time => 'Full Time',
         };
     }
 }
