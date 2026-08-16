@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Invitations;
 use App\Filament\Resources\Invitations\Pages\ManageInvitations;
 use App\Models\Invitation;
 use BackedEnum;
+use UnitEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -24,6 +25,8 @@ class InvitationResource extends Resource
     protected static ?string $model = Invitation::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Users';
 
     protected static ?string $recordTitleAttribute = 'name';
 

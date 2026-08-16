@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Competitions\Pages;
 
 use App\Filament\Resources\Competitions\CompetitionResource;
+use App\Enums\CompetitionType;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;

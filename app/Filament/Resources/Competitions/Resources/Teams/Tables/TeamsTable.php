@@ -27,7 +27,9 @@ class TeamsTable
                 TextColumn::make('display_name')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->numeric(decimalPlaces: 0)
+                    ->prefix('£')
+                    ->suffix('m')
                     ->sortable(),
                 ImageColumn::make('logo_url')->label('Logo'),
                 TextColumn::make('deleted_at')

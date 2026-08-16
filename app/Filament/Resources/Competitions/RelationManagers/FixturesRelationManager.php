@@ -63,12 +63,11 @@ class FixturesRelationManager extends RelationManager
                     ->label('Away Team')
                     ->sortable(),
                 TextColumn::make('home_team_score')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric(),
                 TextColumn::make('away_team_score')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric(),
                 TextColumn::make('kick_off_at')
+                    ->timezone('Europe/London')
                     ->dateTime('M j, Y H:i')
                     ->sortable(),
                 TextColumn::make('deleted_at')

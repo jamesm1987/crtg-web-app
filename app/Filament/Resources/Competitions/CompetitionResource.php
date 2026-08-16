@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Competitions;
 
-use App\Filament\Resources\Competitions\Pages\CreateCompetition;
-use App\Filament\Resources\Competitions\Pages\EditCompetition;
-use App\Filament\Resources\Competitions\Pages\ListCompetitions;
+use App\Filament\Resources\Competitions\Pages\{CreateCompetition, EditCompetition, ListCompetitions, ViewCompetition};
 use App\Filament\Resources\Competitions\Schemas\CompetitionForm;
 use App\Filament\Resources\Competitions\Tables\CompetitionsTable;
 use App\Filament\Resources\Competitions\RelationManagers\TeamsRelationManager;
@@ -48,9 +46,10 @@ class CompetitionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCompetitions::route('/'),
+            'index'  => ListCompetitions::route('/'),
             'create' => CreateCompetition::route('/create'),
-            'edit' => EditCompetition::route('/{record}/edit'),
+            'view'   => ViewCompetition::route('/{record}'),
+            'edit'   => EditCompetition::route('/{record}/edit'),
         ];
     }
 
@@ -60,5 +59,12 @@ class CompetitionResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            LeagueStandingsWidget::class,
+        ];
     }
 }

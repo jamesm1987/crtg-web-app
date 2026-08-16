@@ -27,13 +27,11 @@ class FixturesTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('home_team_score')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric(),
                 TextColumn::make('away_team_score')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric(),
                 TextColumn::make('kick_off_at')
-                    ->dateTime()
+                    ->dateTime(timezone: 'Europe/London')
                     ->sortable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()

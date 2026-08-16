@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use App\Scoring\ScoringEvaluatorRegistry;
+use Filament\Support\Facades\FilamentTimezone;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(ScoringEvaluatorRegistry::class);
     }
 
     /**
@@ -24,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        FilamentTimezone::set(
+            auth()->user()?->timezone ?? config('app.timezone')
+        );
     }
 
     /**
