@@ -59,4 +59,13 @@ class UserTeamPick extends Model
     {
         return is_null($this->active_to);
     }
+
+    public function calculateEarnedPoints(): int
+    {
+        return TeamPointsLedger::query()
+            ->where('team_id', $this->team_id)
+            ->where('earned_at', '>=', $this->active_from)
+            ->when($this->active_to, fn ($q) => $q->where('earned_at', '<', $this->active_to))
+            ->sum('points');
+    }
 }
