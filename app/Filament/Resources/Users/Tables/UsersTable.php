@@ -5,11 +5,13 @@ namespace App\Filament\Resources\Users\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\Action;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use App\Filament\Resources\Users\UserResource;
 
 class UsersTable
 {
@@ -46,7 +48,12 @@ class UsersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                Action::make('View teams')
+                ->url(fn (Action $action): string => UserResource::getUrl('teams', ['record' => $action->getRecord()])),
                 EditAction::make(),
+                
+
+                
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

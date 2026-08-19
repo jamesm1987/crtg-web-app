@@ -28,4 +28,11 @@ class Team extends Model
     {
         return $this->belongsTo(Competition::class, 'competition_id');
     }
+
+    public function calculateEarnedPoints(): int
+    {
+        return TeamPointsLedger::query()
+            ->where('team_id', $this->id)
+            ->sum('points');
+    }
 }

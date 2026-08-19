@@ -24,14 +24,14 @@ class TeamsTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('display_name')
-                    ->searchable(),
                 TextColumn::make('price')
                     ->numeric(decimalPlaces: 0)
                     ->prefix('£')
                     ->suffix('m')
                     ->sortable(),
-                ImageColumn::make('logo_url')->label('Logo'),
+                TextColumn::make('points')
+                    ->numeric(decimalPlaces: 0)
+                    ->sortable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -43,7 +43,7 @@ class TeamsTable
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),                    
             ])
             ->filters([
                 TrashedFilter::make(),
