@@ -3,9 +3,10 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Models\UserTeamPick;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
-use App\Models\UserTeamPick;
+use Illuminate\Support\Collection;
 
 class UserTeamPickOverview extends Page
 {
@@ -20,31 +21,34 @@ class UserTeamPickOverview extends Page
         $this->record = $this->resolveRecord($record);
     }
 
-    public function getPicksByCompetition()
+    public function getPicksByCompetition(): Collection
     {
-        return $this->record
+        $record = $this->getRecord();
+
+        return $record
             ->teamPicks()
             ->active()
-            ->with('team', 'competition')
+            ->with(['team', 'competition'])
             ->get()
-            ->groupBy(fn (UserTeamPick $pick) => $pick->competition->name);
+            ->groupBy(fn (UserTeamPick $pick): string => $pick->competition->name);
     }
 
-    public function transfers() {
-
+    public function transfers()
+    {
+        // TODO: Implement transfers logic
     }
     
     public function getTotalPoints(): int
     {        
-        return $this->getPicksByCompetition()
+        return (int) $this->getPicksByCompetition()
             ->flatten()
-            ->sum(fn (UserTeamPick $pick) => $pick->calculateEarnedPoints());
+            ->sum(fn (UserTeamPick $pick): int => $pick->team->calculateEarnedPoints());
     }
 
     public function getTotalSpent(): int
     {
-        return $this->getPicksByCompetition()
+        return (int) $this->getPicksByCompetition()
             ->flatten()
-            ->sum(fn (UserTeamPick $pick) => $pick->team->price);
+            ->sum(fn (UserTeamPick $pick): int => $pick->team->price);
     }
 }

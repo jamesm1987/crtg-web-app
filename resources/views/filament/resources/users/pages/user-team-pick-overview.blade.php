@@ -28,7 +28,7 @@
 
                         <div class="text-right">
 
-                            <div class="font-bold text-success-600">{{ $pick->calculateEarnedPoints() }} pts</div>
+                            <div class="font-bold text-success-600">{{ $pick->team->calculateEarnedPoints() }} pts</div>
                             <div class="text-xs text-gray-500">&pound; {{ number_format($pick->team->price, 0) }}m</div>
 
                         </div>
