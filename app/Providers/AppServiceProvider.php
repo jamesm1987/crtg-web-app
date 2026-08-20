@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use App\Scoring\ScoringEvaluatorRegistry;
 use Filament\Support\Facades\FilamentTimezone;
+use App\Models\Fixture;
+use App\Observers\FixtureObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         FilamentTimezone::set(
             auth()->user()?->timezone ?? config('app.timezone')
         );
+
+        Fixture::observe(FixtureObserver::class);
     }
 
     /**
