@@ -12,6 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use App\Models\Team;
 
 use App\Filament\Exports\TeamExporter;
 
@@ -29,8 +30,11 @@ class TeamsTable
                     ->prefix('£')
                     ->suffix('m')
                     ->sortable(),
-                TextColumn::make('points')
+                TextColumn::make('point_ledger_sum_points')
+                    ->label('Points')
+                    ->default(0)
                     ->numeric(decimalPlaces: 0)
+                    ->getStateUsing(fn(Team $record) => $record->calculateEarnedPoints())
                     ->sortable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -29,10 +30,14 @@ class Team extends Model
         return $this->belongsTo(Competition::class, 'competition_id');
     }
 
+    public function pointLedger(): HasMany
+    {
+        return $this->hasMany(TeamPointsLedger::class, 'team_id');
+    }
+    
     public function calculateEarnedPoints(): int
     {
-        return TeamPointsLedger::query()
-            ->where('team_id', $this->id)
-            ->sum('points');
+        return $this->pointLedger()->sum('points');
     }
+
 }

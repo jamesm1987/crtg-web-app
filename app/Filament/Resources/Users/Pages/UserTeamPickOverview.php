@@ -35,7 +35,7 @@ class UserTeamPickOverview extends Page
     }
     
     public function getTotalPoints(): int
-    {
+    {        
         return $this->getPicksByCompetition()
             ->flatten()
             ->sum(fn (UserTeamPick $pick) => $pick->calculateEarnedPoints());

@@ -8,6 +8,8 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use App\Models\Team;
 use App\Models\Competition;
+use App\Models\TeamPointsLedger;
+use App\Filament\Resources\Competitions\Resources\Fixtures\FixtureResource;
 use App\Scoring\ScoringEvaluatorRegistry;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -22,7 +24,7 @@ class TeamPointsLedgersTable
     {
         return $table
         ->columns([
-            TextColumn::make('club.name')
+            TextColumn::make('team.name')
                 ->label('Team')
                 ->searchable()
                 ->sortable(),
@@ -36,12 +38,17 @@ class TeamPointsLedgersTable
                 ->label('Rule')
                 ->badge(),
 
-            TextColumn::make('fixture.display_name')
+                TextColumn::make('fixture')
                 ->label('Fixture')
                 ->placeholder('Competition-end award')
-                ->url(fn (ClubPointsLedger $record): ?string => $record->fixture_id
+                ->getStateUsing(fn(TeamPointsLedger $record): string => $record->fixture
+                    ? "{$record->fixture->homeTeam->name} vs {$record->fixture->awayTeam->name}"
+                    : '—'
+                )
+                ->url(fn(TeamPointsLedger $record): ?string => $record->fixture_id
                     ? FixtureResource::getUrl('edit', ['record' => $record->fixture_id])
-                    : null)
+                    : null
+                )
                 ->openUrlInNewTab(),
 
             TextColumn::make('points')

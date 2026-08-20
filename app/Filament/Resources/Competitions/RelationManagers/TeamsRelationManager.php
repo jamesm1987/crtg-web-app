@@ -27,6 +27,9 @@ class TeamsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(
+                fn($query) => $query->withSum('pointLedger', 'points')
+            )
             ->headerActions([
                 CreateAction::make(),
                 Action::make('syncTeams')
