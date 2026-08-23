@@ -3,6 +3,7 @@
 namespace App\Scoring\Evaluators;
 
 use App\Models\Fixture;
+use App\Models\ScoringRule;
 use App\Scoring\Contracts\FixtureScoringEvaluator;
 use App\Scoring\ScoringAward;
 use Illuminate\Support\Collection;

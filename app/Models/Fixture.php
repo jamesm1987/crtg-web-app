@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -51,6 +52,12 @@ class Fixture extends Model
     {
         return $this->belongsTo(Team::class, 'away_team_id');
     }    
+
+    public function scopeCompleted(Builder $query): Builder
+    {
+        return $query->whereNotNull('home_team_score')
+                     ->whereNotNull('away_team_score');
+    }
 
     protected function title(): Attribute
     {

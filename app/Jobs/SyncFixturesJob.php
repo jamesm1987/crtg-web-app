@@ -7,14 +7,13 @@ use Illuminate\Foundation\Queue\Queueable;
 use App\Models\Competition;
 use App\Services\Api\FootballApiClient;
 
+use App\Models\Setting;
 use App\Models\Fixture;
 use App\Models\Team;
 
 class SyncFixturesJob implements ShouldQueue
 {
     use Queueable;
-
-    private $teamsMap = [];
 
     /**
      * Create a new job instance.
@@ -26,13 +25,17 @@ class SyncFixturesJob implements ShouldQueue
 
     private function teamsMap(): array 
     {
-        if (empty($this->teamsMap)) {
-            $this->teamsMap = Team::where('competition_id', $this->competition->id)
-                ->pluck('id', 'api_id')
-                ->all();
-        }
+        return Team::where('competition_id', $this->competition->id)
+            ->pluck('id', 'api_id')
+            ->all();
+    }
 
-        return $this->teamsMap;
+    private function getCompleted(): array
+    {
+        return Fixture::where('competition_id', $this->competition->id)
+            ->completed()
+            ->pluck('api_id')
+            ->toArray();
     }
 
     /**
@@ -40,19 +43,22 @@ class SyncFixturesJob implements ShouldQueue
      */
     public function handle(FootballApiClient $client): void
     {
-        $fixtures = $client->fetchFixtures($this->competition->api_id, now()->year);
-        $teams = $this->teamsMap();
-        
+        $fixtures  = $client->fetchFixtures($this->competition->api_id, Setting::get('season'));
+        $teams     = $this->teamsMap();
+        $completed = $this->getCompleted();
+
         foreach ($fixtures as $fixtureData) {
+            if (in_array($fixtureData->apiId, $completed)) {
+                continue;
+            }
+
             Fixture::updateOrCreate(
                 ['api_id' => $fixtureData->apiId],
                 [
-                    'competition_id'    => $this->competition->id,
-                    'home_team_id'      => $teams[$fixtureData->homeTeamApiId],
-                    'away_team_id'      => $teams[$fixtureData->awayTeamApiId],
-                    'kick_off_at'       => $fixtureData->kickoffAt,
-                    'home_team_score'   => $fixtureData->homeGoals,
-                    'away_team_score'   => $fixtureData->awayGoals,
+                    'competition_id' => $this->competition->id,
+                    'home_team_id'   => $teams[$fixtureData->homeTeamApiId],
+                    'away_team_id'   => $teams[$fixtureData->awayTeamApiId],
+                    'kick_off_at'    => $fixtureData->kickoffAt,
                 ]
             );
         }

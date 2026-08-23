@@ -34,10 +34,10 @@ class Setting extends Model
     public static function get(string $key, mixed $default = null): mixed
     {
         $settings = Cache::rememberForever('app_settings', function () {
-            return self::first();
+            return self::first()?->toArray();
         });
     
-        return $settings?->{$key} ?? $default;
+        return $settings[$key] ?? $default;
     }
 
     protected static function booted(): void

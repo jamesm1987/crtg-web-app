@@ -40,4 +40,9 @@ class Team extends Model
         return $this->pointLedger()->sum('points');
     }
 
+    public function topScorers(): HasMany
+    {
+        return $this->hasMany(TopScorer::class);
+    }
+
 }

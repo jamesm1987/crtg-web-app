@@ -42,4 +42,9 @@ class Competition extends Model
     {
         return $this->hasMany(Fixture::class);
     }
+
+    public function topScorers(): HasMany
+    {
+        return $this->hasMany(TopScorer::class);
+    }
 }

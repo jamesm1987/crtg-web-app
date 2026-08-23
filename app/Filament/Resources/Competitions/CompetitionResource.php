@@ -6,6 +6,7 @@ use App\Filament\Resources\Competitions\Pages\{CreateCompetition, EditCompetitio
 use App\Filament\Resources\Competitions\Schemas\CompetitionForm;
 use App\Filament\Resources\Competitions\Tables\CompetitionsTable;
 use App\Filament\Resources\Competitions\RelationManagers\TeamsRelationManager;
+use App\Filament\Resources\Competitions\RelationManagers\TopScorersRelationManager;
 use App\Filament\Resources\Competitions\RelationManagers\FixturesRelationManager;
 use App\Filament\Resources\Competitions\Resources\Teams\TeamResource;
 use App\Models\Competition;
@@ -39,7 +40,8 @@ class CompetitionResource extends Resource
     {
         return [
             TeamsRelationManager::class,
-            FixturesRelationManager::class
+            FixturesRelationManager::class,
+            TopScorersRelationManager::class
         ];
     }
 

@@ -23,6 +23,7 @@ class TeamsTable
     {
         return $table
             ->columns([
+                TextColumn::make('id'),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('price')

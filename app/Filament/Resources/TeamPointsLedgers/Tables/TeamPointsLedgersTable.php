@@ -46,7 +46,10 @@ class TeamPointsLedgersTable
                     : '—'
                 )
                 ->url(fn(TeamPointsLedger $record): ?string => $record->fixture_id
-                    ? FixtureResource::getUrl('edit', ['record' => $record->fixture_id])
+                    ? FixtureResource::getUrl('edit', [
+                        'record' => $record->fixture_id,
+                        'competition' => $record->competition_id,
+                      ])
                     : null
                 )
                 ->openUrlInNewTab(),

@@ -5,6 +5,7 @@ namespace App\Services\Api;
 use Illuminate\Support\Facades\Http;
 use App\Services\Api\DTOs\TeamData;
 use App\Services\Api\DTOs\FixtureData;
+use App\Services\Api\DTOs\TopScorerData;
 use Illuminate\Support\Collection;
 
 class FootballApiClient
@@ -58,6 +59,8 @@ class FootballApiClient
 
     public function fetchTopScorers(int $leagueId, int $season): Collection
     {
-        return $this->fetch('players/topscorers', $leagueId, $season);            
+        return TopScorerData::collectionFromResponse(
+            $this->fetch('players/topscorers', $leagueId, $season)
+        );
     }
 }

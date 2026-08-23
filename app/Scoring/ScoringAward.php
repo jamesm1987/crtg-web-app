@@ -2,6 +2,8 @@
 
 namespace App\Scoring;
 
+use App\Models\ScoringRule;
+
 final class ScoringAward
 {
     public function __construct(

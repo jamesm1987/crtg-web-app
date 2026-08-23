@@ -2,12 +2,14 @@
 
 namespace App\Services\Api\DTOs;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use App\Services\Api\DTOs\Contracts\ApiDataTransferObject;
 
 class TopScorerData implements ApiDataTransferObject
 {
     public function __construct(
+        public int $playerApiId,
         public string $playerName,
         public int $teamApiId,
         public int $goals,
@@ -16,6 +18,7 @@ class TopScorerData implements ApiDataTransferObject
     public static function fromApiResponse(array $raw): static
     {
         return new static(
+            playerApiId: $raw['player']['id'],
             playerName: $raw['player']['name'],
             teamApiId: $raw['statistics'][0]['team']['id'],
             goals: $raw['statistics'][0]['goals']['total'],
