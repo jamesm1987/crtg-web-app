@@ -55,10 +55,12 @@ class SyncFixturesJob implements ShouldQueue
             Fixture::updateOrCreate(
                 ['api_id' => $fixtureData->apiId],
                 [
-                    'competition_id' => $this->competition->id,
-                    'home_team_id'   => $teams[$fixtureData->homeTeamApiId],
-                    'away_team_id'   => $teams[$fixtureData->awayTeamApiId],
-                    'kick_off_at'    => $fixtureData->kickoffAt,
+                    'competition_id'  => $this->competition->id,
+                    'home_team_id'    => $teams[$fixtureData->homeTeamApiId],
+                    'away_team_id'    => $teams[$fixtureData->awayTeamApiId],
+                    'kick_off_at'     => $fixtureData->kickoffAt,
+                    'home_team_score' => $fixtureData->homeGoals,
+                    'away_team_score' => $fixtureData->awayGoals,
                 ]
             );
         }

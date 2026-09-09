@@ -18,7 +18,6 @@ class TopScorersTable
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
                 TextColumn::make('player_name')
                     ->searchable(),
                 TextColumn::make('team.name')
@@ -35,6 +34,7 @@ class TopScorersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),                    
             ])
+            ->defaultSort('goals', 'desc')
             ->filters([
             ])
             ->recordActions([
